@@ -1,0 +1,17 @@
+# .htaccess - إعدادات الأمان وإجبار HTTPS
+RewriteEngine On
+
+# إجبار HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# منع الوصول إلى ملفات الإعدادات
+<FilesMatch "^(config\.php|database\.php)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# منع الوصول إلى مجلدات حساسة
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
